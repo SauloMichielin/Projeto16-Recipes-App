@@ -51,6 +51,11 @@ export default function Login() {
       <button
         data-testid="login-submit-btn"
         disabled={ isBtnDisabled }
+        onClick={ () => localStorage.setItem(
+          'user',
+          JSON.stringify({ email: login.email }),
+        ) }
+        // localStorage MTO FACIL
       >
         Enter
       </button>
