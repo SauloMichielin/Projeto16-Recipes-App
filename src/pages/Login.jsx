@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 export default function Login() {
   const [login, setLogin] = useState({ email: '', password: '' });
   const [isBtnDisabled, setIsBtnDisabled] = useState(true);
+  const history = useHistory();
 
   const isValid = () => {
     const regex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
@@ -21,6 +23,11 @@ export default function Login() {
       ...login,
       [e.target.name]: e.target.value });
     isValid();
+  };
+
+  const handleClick = () => {
+    localStorage.setItem('user', JSON.stringify({ email: login.email }));
+    history.push('/meals');
   };
 
   return (
@@ -51,10 +58,7 @@ export default function Login() {
       <button
         data-testid="login-submit-btn"
         disabled={ isBtnDisabled }
-        onClick={ () => localStorage.setItem(
-          'user',
-          JSON.stringify({ email: login.email }),
-        ) }
+        onClick={ handleClick }
         // localStorage MTO FACIL
       >
         Enter
