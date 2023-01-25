@@ -1,20 +1,59 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function Login() {
+  const [login, setLogin] = useState({ email: '', password: '' });
+  const [isBtnDisabled, setIsBtnDisabled] = useState(true);
+
+  const isValid = () => {
+    const regex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+    const SIX = 6;
+    const emailValid = regex.test(login.email);
+    const passwordValid = login.password.length >= SIX;
+    if (emailValid && passwordValid) {
+      setIsBtnDisabled(false);
+    } else {
+      setIsBtnDisabled(true);
+    }
+  };
+
+  const handleChange = (e) => {
+    setLogin({
+      ...login,
+      [e.target.name]: e.target.value });
+    isValid();
+  };
+
   return (
     <div>
       <h1>Login</h1>
       <label htmlFor="email">
         Email:
-        <input data-testid="email-input" type="email" id="email" />
+        <input
+          onChange={ handleChange }
+          data-testid="email-input"
+          type="email"
+          name="email"
+          id="email"
+          value={ login.email }
+        />
       </label>
       <label htmlFor="password">
         Password:
-        <input data-testid="password-input" type="password" id="password" />
+        <input
+          onChange={ handleChange }
+          data-testid="password-input"
+          type="password"
+          name="password"
+          id="password"
+          value={ login.password }
+        />
       </label>
-      <button data-testid="login-submit-btn">Enter</button>
+      <button
+        data-testid="login-submit-btn"
+        disabled={ isBtnDisabled }
+      >
+        Enter
+      </button>
     </div>
   );
 }
-
-// commmit maneiro
