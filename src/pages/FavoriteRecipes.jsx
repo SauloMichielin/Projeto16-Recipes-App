@@ -1,11 +1,9 @@
 import React from 'react';
-import Header from '../components/Header';
+import Header from '../Components/Header';
 
 function FavoriteRecipes() {
   return (
-    <section>
-      <Header title="Done Recipes" />
-    </section>
+    <Header title="Favorite Recipes" />
   );
 }
 
