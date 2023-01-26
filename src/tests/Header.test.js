@@ -25,4 +25,12 @@ describe('test Header Component', () => {
     expect(button).toBeInTheDocument();
     userEvent.click(button);
   });
+  test('test if there is a search bar when clicks on the button', () => {
+    render(<Meals />);
+    const input = screen.getByRole('textbox');
+    expect(input).not.toBeInTheDocument();
+    const button = screen.getByRole('button', { name: /PESQUISAR/i });
+    userEvent.click(button);
+    expect(input).toBeInTheDocument();
+  });
 });
