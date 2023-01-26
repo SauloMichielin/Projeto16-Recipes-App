@@ -11,6 +11,7 @@ import Profile from './pages/Profile';
 import FavoriteRecipes from './pages/FavoriteRecipes';
 import MealRecipeInProgress from './pages/MealRecipeInProgress';
 import DrinkRecipeInProgress from './pages/DrinkRecipeInProgress';
+import Receitas from './pages/Receitas';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/profile" component={ Profile } />
           <Route path="/done-recipes" component={ DoneRecipes } />
           <Route path="/favorite-recipes" component={ FavoriteRecipes } />
+          <Route path="/meals" component={ Receitas } />
         </Switch>
       </BrowserRouter>
     </div>
