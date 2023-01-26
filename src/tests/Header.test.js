@@ -1,36 +1,36 @@
 import React from 'react';
-import { screen } from '@testing-library/react';
+import { screen, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import App from '../App';
-import ContextProvider from '../Context/ContextProvider';
+import Meals from '../pages/Meals';
 
-describe('Testa <Header />', () => {
-  it('Testa se é renderizado um elemento <h1> na tela', () => {
-    renderWithRouter(
-      <ContextProvider>
-        <App />
-        ,
-      </ContextProvider>,
-    );
-
-    const login = screen.getByTestId(btnLogin);
-
-    const email = screen.getByTestId(inputEmail);
-    const password = screen.getByTestId(inputPassword);
-
-    userEvent.type(email, userEmail);
-    userEvent.type(password, '1234567');
-    userEvent.click(login);
-
-    expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument();
+describe('test Header Component', () => {
+  test('test if exist a h2 in the component', () => {
+    render(<Meals />);
+    const h2 = screen.getByRole('heading', { name: /meals/i });
+    expect(h2).toBeInTheDocument();
   });
-
-  it('Testa se é renderizado um botão que mostra e esconde um input', () => {
-    renderWithRouter(
-      <ContextProvider>
-        <App />
-        ,
-      </ContextProvider>,
-    );
+  test('test if there is a button in the component', () => {
+    render(<Meals />);
+    const button = screen.getByRole('button', { name: /PErfIl/i });
+    expect(button).toBeInTheDocument();
+  });
+  test('test if there is a image in the component', () => {
+    render(<Meals />);
+    const img = screen.getByRole('img');
+    expect(img).toBeInTheDocument();
+  });
+  test('test if when clicks on the button, you are redirected to another page', () => {
+    render(<Meals />);
+    const button = screen.getByRole('button', { name: /PErfIl/i });
+    expect(button).toBeInTheDocument();
+    userEvent.click(button);
+  });
+  test('test if there is a search bar when clicks on the button', () => {
+    render(<Meals />);
+    const input = screen.getByRole('textbox');
+    expect(input).not.toBeInTheDocument();
+    const button = screen.getByRole('button', { name: /PESQUISAR/i });
+    userEvent.click(button);
+    expect(input).toBeInTheDocument();
   });
 });
