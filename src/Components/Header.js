@@ -7,9 +7,12 @@ import SearchBar from './SearchBar';
 
 function Header({ title, iconSearch }) {
   const [showElement, setShowElement] = useState(false);
+
   const showOrHide = () => (showElement === true
     ? setShowElement(false) : setShowElement(true));
+
   const history = useHistory();
+
   return (
     <section>
       <h2 data-testid="page-title">{title}</h2>
