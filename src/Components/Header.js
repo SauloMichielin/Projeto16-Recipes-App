@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import searchIcon from '../images/searchIcon.svg';
 import profileIcon from '../images/profileIcon.svg';
+import SearchBar from './SearchBar';
 
 function Header({ title, iconSearch }) {
   const [showElement, setShowElement] = useState(false);
@@ -34,10 +35,9 @@ function Header({ title, iconSearch }) {
           </button>)
       }
       {
-        showElement ? <input
-          type="text"
-          data-testid="search-input"
-        /> : null
+        showElement ? (
+          <SearchBar />
+        ) : null
       }
     </section>
   );
