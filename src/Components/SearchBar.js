@@ -5,6 +5,7 @@ function SearchBar() {
   const [inputValue, setInputValue] = useState('');
   const [radioSelect, setRadioSelect] = useState('');
   const { makeFetch } = useFetch();
+  // pushzão da massa para passar requisito
   const handleClick = () => {
     if (radioSelect === 'firstLetter' && inputValue.length > 1) {
       return global.alert('Your search must have only 1 (one) character');
