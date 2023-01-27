@@ -1,5 +1,7 @@
 import React from 'react';
 
+// para fazer um pr
+
 function SearchBar() {
   return (
     <label htmlFor="search">
@@ -18,6 +20,7 @@ function SearchBar() {
               type="radio"
               value="ingredients"
               id="ingredients"
+              name="radioButtons"
               data-testid="ingredient-search-radio"
             />
             Ingrediente
@@ -28,6 +31,7 @@ function SearchBar() {
               type="radio"
               value="name"
               id="name"
+              name="radioButtons"
               data-testid="name-search-radio"
             />
             Nome
@@ -38,6 +42,7 @@ function SearchBar() {
               type="radio"
               value="firstLetter"
               id="firstLetter"
+              name="radioButtons"
               data-testid="first-letter-search-radio"
             />
             Primeira letra
