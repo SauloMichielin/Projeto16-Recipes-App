@@ -16,26 +16,27 @@ function Header({ title, iconSearch }) {
   return (
     <section>
       <h2 data-testid="page-title">{title}</h2>
-      <button
+      <img
         data-testid="profile-top-btn"
         src={ profileIcon }
         alt="Profile icon"
         onClick={ () => history.push('/profile') }
-      >
-        PERFIL
-      </button>
+        aria-hidden="true"
+      />
       <br />
       <br />
       {
         iconSearch && (
-          <button
-            data-testid="search-top-btn"
-            src={ searchIcon }
-            alt="Search icon"
-            onClick={ showOrHide }
-          >
-            PESQUISAR
-          </button>)
+          <div>
+            <img
+              data-testid="search-top-btn"
+              src={ searchIcon }
+              alt="Search icon"
+              onClick={ showOrHide }
+              aria-hidden="true"
+            />
+          </div>
+        )
       }
       {
         showElement ? (

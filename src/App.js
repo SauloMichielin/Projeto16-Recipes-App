@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Route, Switch, BrowserRouter } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
 import Meals from './pages/Meals';
 import Drinks from './pages/Drinks';
@@ -17,27 +17,25 @@ function App() {
   return (
     <div>
       <h1>Trybe</h1>
-      <BrowserRouter>
-        <Switch>
-          <Route exact path="/" component={ Login } />
-          <Route path="/meals" component={ Meals } />
-          <Route path="/drinks" component={ Drinks } />
-          <Route path="/meals/:id-da-receita" component={ MealRecipe } />
-          <Route path="/drinks/:id-da-receita" component={ DrinkRecipe } />
-          <Route
-            path="/meals/:id-da-receita/in-progress"
-            component={ MealRecipeInProgress }
-          />
-          <Route
-            path="/meals/:id-da-receita/in-progress"
-            component={ DrinkRecipeInProgress }
-          />
-          <Route path="/profile" component={ Profile } />
-          <Route path="/done-recipes" component={ DoneRecipes } />
-          <Route path="/favorite-recipes" component={ FavoriteRecipes } />
-          <Route path="/meals" component={ Receitas } />
-        </Switch>
-      </BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={ Login } />
+        <Route path="/meals" component={ Meals } />
+        <Route path="/drinks" component={ Drinks } />
+        <Route path="/meals/:id-da-receita" component={ MealRecipe } />
+        <Route path="/drinks/:id-da-receita" component={ DrinkRecipe } />
+        <Route
+          path="/meals/:id-da-receita/in-progress"
+          component={ MealRecipeInProgress }
+        />
+        <Route
+          path="/meals/:id-da-receita/in-progress"
+          component={ DrinkRecipeInProgress }
+        />
+        <Route path="/profile" component={ Profile } />
+        <Route path="/done-recipes" component={ DoneRecipes } />
+        <Route path="/favorite-recipes" component={ FavoriteRecipes } />
+        <Route path="/meals" component={ Receitas } />
+      </Switch>
     </div>
   );
 }

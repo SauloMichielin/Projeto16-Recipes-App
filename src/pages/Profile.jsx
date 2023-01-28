@@ -6,13 +6,13 @@ import Header from '../Components/Header';
 function Profile() {
   const history = useHistory();
   const getEmailLS = localStorage.getItem('user');
-  const email = getEmailLS.split('"')[3];
+  // const haveEmail = !getEmailLS ? getEmailLS : getEmailLS.email;
   return (
     <section>
       <Header title="Profile" />
       <span>Email:</span>
       {' '}
-      <span data-testid="profile-email">{ email }</span>
+      <span data-testid="profile-email">{ getEmailLS }</span>
       <br />
       <button
         type="button"

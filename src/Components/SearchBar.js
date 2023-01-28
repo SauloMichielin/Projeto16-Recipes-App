@@ -1,21 +1,37 @@
 import React, { useState } from 'react';
-import useFetch from '../Hooks/useFetchIngredient';
+import { useHistory } from 'react-router-dom';
+import useFetchDrinks from '../Hooks/useFetchDrinks';
+import useFetchMeals from '../Hooks/useFetchMeals';
 
 function SearchBar() {
+  const { makeMealsFetch } = useFetchMeals();
+  const { makeDrinksFetch } = useFetchDrinks();
+  const history = useHistory();
   const [inputValue, setInputValue] = useState('');
   const [radioSelect, setRadioSelect] = useState('');
-  const { makeFetch } = useFetch();
   // pushzão da massa para passar requisito
   const handleClick = () => {
+    if (history.location.pathname === '/meals') {
+      if (radioSelect === 'firstLetter' && inputValue.length > 1) {
+        return global.alert('Your search must have only 1 (one) character');
+      }
+      if (radioSelect === 'ingredients') {
+        makeMealsFetch('filter.php?i=', inputValue);
+      } else if (radioSelect === 'name') {
+        makeMealsFetch('search.php?s=', inputValue);
+      } else {
+        makeMealsFetch('search.php?f=', inputValue);
+      }
+    }
     if (radioSelect === 'firstLetter' && inputValue.length > 1) {
       return global.alert('Your search must have only 1 (one) character');
     }
     if (radioSelect === 'ingredients') {
-      makeFetch('filter.php?i=', inputValue);
+      makeDrinksFetch('filter.php?i=', inputValue);
     } else if (radioSelect === 'name') {
-      makeFetch('search.php?s=', inputValue);
+      makeDrinksFetch('search.php?s=', inputValue);
     } else {
-      makeFetch('search.php?f=', inputValue);
+      makeDrinksFetch('search.php?f=', inputValue);
     }
   };
   return (
