@@ -11,10 +11,10 @@ function SearchBar() {
   const [radioSelect, setRadioSelect] = useState('');
   // pushzão da massa para passar requisito
   const handleClick = () => {
+    if (radioSelect === 'firstLetter' && inputValue.length > 1) {
+      return global.alert('Your search must have only 1 (one) character');
+    }
     if (history.location.pathname === '/meals') {
-      if (radioSelect === 'firstLetter' && inputValue.length > 1) {
-        return global.alert('Your search must have only 1 (one) character');
-      }
       if (radioSelect === 'ingredients') {
         makeMealsFetch('filter.php?i=', inputValue);
       } else if (radioSelect === 'name') {
@@ -22,16 +22,14 @@ function SearchBar() {
       } else {
         makeMealsFetch('search.php?f=', inputValue);
       }
-    }
-    if (radioSelect === 'firstLetter' && inputValue.length > 1) {
-      return global.alert('Your search must have only 1 (one) character');
-    }
-    if (radioSelect === 'ingredients') {
-      makeDrinksFetch('filter.php?i=', inputValue);
-    } else if (radioSelect === 'name') {
-      makeDrinksFetch('search.php?s=', inputValue);
-    } else {
-      makeDrinksFetch('search.php?f=', inputValue);
+    } else if (history.location.pathname === '/drinks') {
+      if (radioSelect === 'ingredients') {
+        makeDrinksFetch('filter.php?i=', inputValue);
+      } else if (radioSelect === 'name') {
+        makeDrinksFetch('search.php?s=', inputValue);
+      } else {
+        makeDrinksFetch('search.php?f=', inputValue);
+      }
     }
   };
   return (
