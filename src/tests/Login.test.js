@@ -34,7 +34,7 @@ describe('test Login Page', () => {
     userEvent.type(password, '123456789');
     expect(button).toBeEnabled();
     userEvent.click(button);
-    const receita = screen.getByText(/receitas/i);
-    expect(receita).toBeInTheDocument();
+    const meals = screen.getByRole('heading', { name: /meals/i });
+    expect(meals).toBeInTheDocument();
   });
 });

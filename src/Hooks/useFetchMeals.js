@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-function useFetch() {
+function useFetchMeals() {
   const [isLoading, setIsLoading] = useState(false);
-  const makeFetch = async (filterOrSearch, endPoint) => {
+  const makeMealsFetch = async (filterOrSearch, endPoint) => {
     // filterOrSearch tem que usar filter.php?i= OU search.php?s= OU search.php?f=
     // filterOrSearch tem o parametro passado pelo radioButton
     // endPoint tem que usar o que tem no Input
@@ -17,9 +17,9 @@ function useFetch() {
     }
   };
   return {
-    makeFetch,
+    makeMealsFetch,
     isLoading,
   };
 }
 
-export default useFetch;
+export default useFetchMeals;
