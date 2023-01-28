@@ -116,15 +116,17 @@ describe('Test the searchBar in the Meals component', () => {
 });
 
 describe('Test the searchBar in the Drinks component', () => {
-  test('Test the alert', () => {
+  beforeEach(() => {
     const drinksBtn = screen.getByRole('button', { name: /bebidas/i });
     expect(drinksBtn).toBeInTheDocument();
     userEvent.click(drinksBtn);
-    global.alert = jest.fn();
     const button = screen.getByTestId(testId);
     userEvent.click(button);
-    const letra = screen.getByText(/primeira letra/i);
+  });
+  test('Test the alert', () => {
+    global.alert = jest.fn();
     const input = screen.getByRole('textbox');
+    const letra = screen.getByText(/primeira letra/i);
     const buscarBtn = screen.getByRole('button', { name: /buscar/i });
     userEvent.type(input, 'aa');
     userEvent.click(letra);
@@ -133,11 +135,6 @@ describe('Test the searchBar in the Drinks component', () => {
   });
 
   test('Test the ingredients radio button', () => {
-    const drinksBtn = screen.getByRole('button', { name: /bebidas/i });
-    expect(drinksBtn).toBeInTheDocument();
-    userEvent.click(drinksBtn);
-    const button = screen.getByTestId(testId);
-    userEvent.click(button);
     const input = screen.getByRole('textbox');
     const ingrediente = screen.getByText(/ingrediente/i);
     const buscarBtn = screen.getByRole('button', { name: /buscar/i });
@@ -147,16 +144,50 @@ describe('Test the searchBar in the Drinks component', () => {
   });
 
   test('Test the name radio button', () => {
-    const drinksBtn = screen.getByRole('button', { name: /bebidas/i });
-    expect(drinksBtn).toBeInTheDocument();
-    userEvent.click(drinksBtn);
-    const button = screen.getByTestId(testId);
-    userEvent.click(button);
     const input = screen.getByRole('textbox');
     const nome = screen.getByText(/nome/i);
     const buscarBtn = screen.getByRole('button', { name: /buscar/i });
     userEvent.type(input, 'Chicken');
     userEvent.click(nome);
     userEvent.click(buscarBtn);
+  });
+});
+
+// não sei o porque não funciona :)
+
+describe('testa meals', () => {
+  beforeEach(() => {
+    const button = screen.getByTestId(testId);
+    userEvent.click(button);
+  });
+  test('testa ingredientes', () => {
+    global.alert = jest.fn();
+    const input = screen.getByRole('textbox');
+    userEvent.type(input, 'XABLAU');
+    const ingrediente = screen.getByText(/ingrediente/i);
+    userEvent.click(ingrediente);
+    const buscarBtn = screen.getByRole('button', { name: /buscar/i });
+    userEvent.click(buscarBtn);
+    expect(global.alert).toHaveBeenCalledTimes(1);
+  });
+  test('testa nomes', () => {
+    global.alert = jest.fn();
+    const input = screen.getByRole('textbox');
+    userEvent.type(input, 'XABLAU');
+    const nome = screen.getByText(/nome/i);
+    userEvent.click(nome);
+    const buscarBtn = screen.getByRole('button', { name: /buscar/i });
+    userEvent.click(buscarBtn);
+    expect(global.alert).toHaveBeenCalledTimes(1);
+  });
+  test('testa primeira letra', () => {
+    global.alert = jest.fn();
+    const input = screen.getByRole('textbox');
+    const letra = screen.getByText(/primeira letra/i);
+    const buscarBtn = screen.getByRole('button', { name: /buscar/i });
+    userEvent.type(input, '0');
+    userEvent.click(letra);
+    userEvent.click(buscarBtn);
+    expect(global.alert).toHaveBeenCalledTimes(1);
   });
 });
