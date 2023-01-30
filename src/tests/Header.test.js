@@ -157,9 +157,21 @@ describe('Test the searchBar in the Drinks component', () => {
 
 describe('testa meals', () => {
   beforeEach(() => {
+    const drinkBtn = screen.getByTestId('drinks-bottom-btn');
+    userEvent.click(drinkBtn);
     const button = screen.getByTestId(testId);
     userEvent.click(button);
   });
+
+  test('testa a primeira letra', () => {
+    const input = screen.getByRole('textbox');
+    const letra = screen.getByText(/primeira letra/i);
+    const buscarBtn = screen.getByRole('button', { name: /buscar/i });
+    userEvent.type(input, 'a');
+    userEvent.click(letra);
+    userEvent.click(buscarBtn);
+  });
+
   test('testa ingredientes', () => {
     global.alert = jest.fn();
     const input = screen.getByRole('textbox');
@@ -170,6 +182,7 @@ describe('testa meals', () => {
     userEvent.click(buscarBtn);
     expect(global.alert).toHaveBeenCalledTimes(1);
   });
+
   test('testa nomes', () => {
     global.alert = jest.fn();
     const input = screen.getByRole('textbox');
@@ -180,7 +193,8 @@ describe('testa meals', () => {
     userEvent.click(buscarBtn);
     expect(global.alert).toHaveBeenCalledTimes(1);
   });
-  test('testa primeira letra', () => {
+
+  test('testa se primeira letra da erro', () => {
     global.alert = jest.fn();
     const input = screen.getByRole('textbox');
     const letra = screen.getByText(/primeira letra/i);
