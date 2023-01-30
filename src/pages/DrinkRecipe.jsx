@@ -2,7 +2,9 @@ import React from 'react';
 
 function DrinkRecipe() {
   return (
-    <div>Drink</div>
+    <div>
+      <h1>XABLAU</h1>
+    </div>
   );
 }
 
