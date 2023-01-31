@@ -1,8 +1,11 @@
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 function useFetchDrinks() {
   const [isLoading, setIsLoading] = useState(false);
   const [drinksResult, setDrinksResult] = useState([]);
+  const [idDrink, setIdDrink] = useState(0);
+  const history = useHistory();
   const makeDrinksFetch = async (filterOrSearch, endPoint) => {
     // filterOrSearch tem que usar filter.php?i= OU search.php?s= OU search.php?f=
     // filterOrSearch tem o parametro passado pelo radioButton
@@ -14,8 +17,14 @@ function useFetchDrinks() {
       console.log(result.drinks);
       if (!result.drinks) {
         global.alert('Sorry, we haven\'t found any recipes for these filters.');
+        return;
       }
       setDrinksResult(result.drinks);
+      if (result.drinks.length === 1) {
+        setIdDrink(result.drinks[0].idDrink);
+        history.push(`/drinks/${result.drinks[0].idDrink}`);
+      }
+      return;
     } finally {
       setIsLoading(false);
     }
@@ -24,6 +33,7 @@ function useFetchDrinks() {
     makeDrinksFetch,
     isLoading,
     drinksResult,
+    idDrink,
   };
 }
 
