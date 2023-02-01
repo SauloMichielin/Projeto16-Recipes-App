@@ -4,10 +4,10 @@ import Header from '../Components/Header';
 import Context from '../Context/Context';
 
 function Meals() {
-  // ajustes
   const { mealsResult } = useContext(Context);
   const [initialState, setInitialState] = useState([]);
   const [filters, setFilters] = useState([]);
+  const [filterSelect, setFilterSelect] = useState(false);
   const DOZE = 12;
   const CINCO = 5;
   const mealsArray = [];
@@ -37,6 +37,34 @@ function Meals() {
       mealsArray.push(mealsResult[index]);
     }
   }
+
+  const filterCategory = async (sel) => {
+    const url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${sel.strCategory}`;
+    const response = await fetch(url);
+    const data = await response.json();
+    const dataFinal = [];
+    if (data.meals.length >= 1 && data.meals.length < DOZE) {
+      for (let index = 0; index < data.meals.length; index += 1) {
+        dataFinal.push(data.meals[index]);
+      }
+    }
+    if (data.meals.length >= 1 && data.meals.length > DOZE) {
+      for (let index = 0; index < DOZE; index += 1) {
+        dataFinal.push(data.meals[index]);
+      }
+    }
+    setInitialState(dataFinal);
+  };
+
+  const filterOrigin = async () => {
+    const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+    const result = await response.json();
+    const arrayResult = [];
+    for (let index = 0; index < DOZE; index += 1) {
+      arrayResult.push(result.meals[index]);
+    }
+    setInitialState(arrayResult);
+  };
   return (
     <main>
       <Header title="Meals" iconSearch />
@@ -45,11 +73,30 @@ function Meals() {
           <button
             data-testid={ `${laEle.strCategory}-category-filter` }
             key={ ix }
+            onClick={ () => {
+              console.log(filterCategory(laEle));
+              if (filterSelect === false) {
+                filterCategory(laEle);
+                setFilterSelect(true);
+                return;
+              }
+              if (filterSelect === true) {
+                filterOrigin();
+                setFilterSelect(false);
+              }
+            } }
           >
             {laEle.strCategory}
           </button>
         ))
       }
+      <button
+        type="button"
+        data-testid="All-category-filter"
+        onClick={ async () => filterOrigin() }
+      >
+        Remover Filtros
+      </button>
       {
         (mealsArray.length > 1 ? (
           mealsArray.map((e, i) => (
