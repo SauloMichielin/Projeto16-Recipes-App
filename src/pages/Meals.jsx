@@ -5,6 +5,7 @@ import Context from '../Context/Context';
 
 function Meals() {
   const { mealsResult } = useContext(Context);
+  console.log(mealsResult);
   const [initialState, setInitialState] = useState([]);
   const [filters, setFilters] = useState([]);
   const [filterSelect, setFilterSelect] = useState(false);
@@ -12,7 +13,6 @@ function Meals() {
   const DOZE = 12;
   const CINCO = 5;
   const mealsArray = [];
-  // só para fazer um commit :)
   useEffect(() => {
     async function filtersData() {
       const response = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
@@ -101,26 +101,27 @@ function Meals() {
         Remover Filtros
       </button>
       {
-        initialState.map((ele, i) => (
-          <div
-            key={ i }
-            data-testid={ `${i}-recipe-card` }
-          >
-            <p data-testid={ `${i}-card-name` } key={ i }>{ele.strMeal}</p>
-            <img data-testid={ `${i}-card-img` } src={ ele.strMealThumb } alt="" />
-          </div>
+        (mealsArray.length > 1 ? (
+          mealsArray.map((e, i) => (
+            <div
+              key={ `${i}-recipe-card-food` }
+              data-testid={ `${i}-recipe-card` }
+            >
+              <p data-testid={ `${i}-card-name` }>{e.strMeal}</p>
+              <img data-testid={ `${i}-card-img` } src={ e.strMealThumb } alt="" />
+            </div>
+          ))
+        ) : (
+          initialState.map((ele, i) => (
+            <div
+              key={ `${i}-recipe-card-food-initial` }
+              data-testid={ `${i}-recipe-card` }
+            >
+              <p data-testid={ `${i}-card-name` }>{ele.strMeal}</p>
+              <img data-testid={ `${i}-card-img` } src={ ele.strMealThumb } alt="" />
+            </div>
+          ))
         ))
-      }
-      {
-        (mealsArray.length > 1 && mealsArray.map((e, i) => (
-          <div
-            key={ e }
-            data-testid={ `${i}-recipe-card` }
-          >
-            <p data-testid={ `${i}-card-name` } key={ e }>{e.strMeal}</p>
-            <img data-testid={ `${i}-card-img` } src={ e.strMealThumb } alt="" />
-          </div>
-        )))
       }
       <Footer />
     </main>

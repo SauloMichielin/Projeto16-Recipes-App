@@ -3,9 +3,10 @@ import { screen, render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
+import ContextProvider from '../Context/ContextProvider';
 
 beforeEach(() => {
-  render(<MemoryRouter><App /></MemoryRouter>);
+  render(<MemoryRouter><ContextProvider><App /></ContextProvider></MemoryRouter>);
   const email = screen.getByRole('textbox', { name: /email:/i });
   const password = screen.getByLabelText(/password:/i);
   const button = screen.getByRole('button', { name: /enter/i });

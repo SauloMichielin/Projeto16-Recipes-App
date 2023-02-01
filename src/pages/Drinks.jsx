@@ -10,7 +10,7 @@ function Drinks() {
   const [filterSelect, setFilterSelect] = useState(false);
   const DOZE = 12;
   const CINCO = 5;
-  const DrinksArray = [];
+  const drinksArray = [];
   useEffect(() => {
     async function filtersData() {
       const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
@@ -29,12 +29,12 @@ function Drinks() {
   }, []);
   if (drinksResult.length > 1 && drinksResult.length < DOZE) {
     for (let index = 0; index < drinksResult.length; index += 1) {
-      DrinksArray.push(drinksResult[index]);
+      drinksArray.push(drinksResult[index]);
     }
   }
   if (drinksResult.length > 1 && drinksResult.length > DOZE) {
     for (let index = 0; index < DOZE; index += 1) {
-      DrinksArray.push(drinksResult[index]);
+      drinksArray.push(drinksResult[index]);
     }
   }
   /*
@@ -103,28 +103,26 @@ function Drinks() {
       >
         Remover Filtros
       </button>
-      {
-        initialState.map((ele, i) => (
+      {drinksArray.length > 1 ? (
+        drinksArray.map((e, i) => (
           <div
-            key={ i }
-            data-testid={ `${i}-recipe-card` }
-          >
-            <p data-testid={ `${i}-card-name` } key={ i }>{ele.strDrink}</p>
-            <img data-testid={ `${i}-card-img` } src={ ele.strDrinkThumb } alt="" />
-          </div>
-        ))
-      }
-      {
-        (DrinksArray.length > 1 ? DrinksArray.map((e, i) => (
-          <div
-            key={ e }
+            key={ `${i}-recipe-card-drink` }
             data-testid={ `${i}-recipe-card` }
           >
             <p data-testid={ `${i}-card-name` } key={ e }>{e.strDrink}</p>
             <img data-testid={ `${i}-card-img` } src={ e.strDrinkThumb } alt="" />
           </div>
-        )) : '')
-      }
+        ))) : (
+        initialState.map((ele, i) => (
+          <div
+            key={ `${i}-recipe-card-drink-initial` }
+            data-testid={ `${i}-recipe-card` }
+          >
+            <p data-testid={ `${i}-card-name` }>{ele.strDrink}</p>
+            <img data-testid={ `${i}-card-img` } src={ ele.strDrinkThumb } alt="" />
+          </div>
+        ))
+      )}
       <Footer />
     </main>
   );
