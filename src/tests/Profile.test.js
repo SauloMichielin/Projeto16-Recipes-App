@@ -26,7 +26,6 @@ describe('Testes da página de profile', () => {
     expect(favRecipe).toBeInTheDocument();
     expect(logout).toBeInTheDocument();
     expect(email).toBeInTheDocument();
-    localStorage.setItem(email);
   });
   test('Test if are changing the route when the logout button is pressed', () => {
     const logout = screen.getByRole('button', { name: /logout/i });
