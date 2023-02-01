@@ -21,6 +21,11 @@ body {
   position: fixed;
 }
 
+img {
+  height: 50px;
+  width: 50px;
+}
+
 .rocksGlass {
   animation: shake 1s infinite ease;
   max-height: 80vh;

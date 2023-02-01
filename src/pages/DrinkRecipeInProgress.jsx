@@ -3,7 +3,7 @@ import React from 'react';
 function DrinkRecipeInProgress() {
   return (
     <div>
-      Drinks in progress...
+      <h3>Drinks in progress...</h3>
     </div>
   );
 }

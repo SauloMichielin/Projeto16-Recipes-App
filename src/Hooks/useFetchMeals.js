@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 function useFetchMeals() {
-  const [mealsReturn, setMealsReturn] = useState([]);
+  const [mealsResult, setMealsResult] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [idMeal, setIdMeal] = useState(0);
   const history = useHistory();
@@ -19,7 +19,7 @@ function useFetchMeals() {
         global.alert('Sorry, we haven\'t found any recipes for these filters.');
         return;
       }
-      setMealsReturn(result.meals);
+      setMealsResult(result.meals);
       if (result.meals.length === 1) {
         setIdMeal(result.meals[0].idMeal);
         history.push(`/meals/${result.meals[0].idMeal}`);
@@ -32,7 +32,7 @@ function useFetchMeals() {
   return {
     makeMealsFetch,
     isLoading,
-    mealsReturn,
+    mealsResult,
     idMeal,
   };
 }
