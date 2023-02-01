@@ -14,7 +14,6 @@ function useFetchMeals() {
       setIsLoading(true);
       const response = await fetch(`https://www.themealdb.com/api/json/v1/1/${filterOrSearch}${endPoint}`);
       const result = await response.json();
-      console.log(result);
       if (!result.meals) {
         global.alert('Sorry, we haven\'t found any recipes for these filters.');
         return;
@@ -24,7 +23,6 @@ function useFetchMeals() {
         setIdMeal(result.meals[0].idMeal);
         history.push(`/meals/${result.meals[0].idMeal}`);
       }
-      return;
     } finally {
       setIsLoading(false);
     }
