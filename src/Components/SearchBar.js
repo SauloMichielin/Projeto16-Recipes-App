@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import useFetchDrinks from '../Hooks/useFetchDrinks';
-import useFetchMeals from '../Hooks/useFetchMeals';
+import Context from '../Context/Context';
 
 function SearchBar() {
-  const { makeMealsFetch } = useFetchMeals();
-  const { makeDrinksFetch } = useFetchDrinks();
+  const { makeMealsFetch, makeDrinksFetch } = useContext(Context);
   const history = useHistory();
   const [inputValue, setInputValue] = useState('');
   const [radioSelect, setRadioSelect] = useState('');

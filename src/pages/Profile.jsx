@@ -7,13 +7,12 @@ function Profile() {
   const history = useHistory();
   const getEmailLS = localStorage.getItem('user');
   const emailParse = JSON.parse(getEmailLS);
-  const haveEmail = !getEmailLS ? getEmailLS : emailParse.email;
   return (
     <section>
       <Header title="Profile" />
       <span>Email:</span>
       {' '}
-      <span data-testid="profile-email">{ haveEmail }</span>
+      <span data-testid="profile-email">{ emailParse && emailParse.email }</span>
       <br />
       <button
         type="button"

@@ -17,25 +17,19 @@ beforeEach(() => {
 const testId = 'search-top-btn';
 // ------------------------------------------------------------------------------------
 
-describe('test if exist a h2 in the component', () => {
-  test('', () => {
+describe('', () => {
+  test('test if exist a h2 in the component', () => {
     const h2 = screen.getByRole('heading', { name: /meals/i });
     expect(h2).toBeInTheDocument();
   });
-});
-
-describe('test if there is a button in the component', () => {
-  test('', () => {
+  test('test if there is a button in the component', () => {
     const perfilButton = screen.getByTestId('profile-top-btn');
     expect(perfilButton).toBeInTheDocument();
     userEvent.click(perfilButton);
     const perfil = screen.getByRole('heading', { name: /profile/i });
     expect(perfil).toBeInTheDocument();
   });
-});
-
-describe('test if there is a search bar when clicks on the button', () => {
-  test('', () => {
+  test('test if there is a search bar when clicks on the button', () => {
     const button = screen.getByTestId(testId);
     userEvent.click(button);
     const input = screen.getByRole('textbox');
@@ -43,10 +37,7 @@ describe('test if there is a search bar when clicks on the button', () => {
     userEvent.click(button);
     expect(input).not.toBeInTheDocument();
   });
-});
-
-describe('test search bar in header', () => {
-  test('', () => {
+  test('test search bar in header', () => {
     const button = screen.getByTestId('search-top-btn');
     userEvent.click(button);
     const ingrediente = screen.getByText(/ingrediente/i);
@@ -63,10 +54,7 @@ describe('test search bar in header', () => {
     expect(letra).not.toBeInTheDocument();
     expect(buscarBtn).not.toBeInTheDocument();
   });
-});
-
-describe('Search bar inputs', () => {
-  test('', () => {
+  test('Search bar inputs', () => {
     const button = screen.getByTestId(testId);
     userEvent.click(button);
     const letra = screen.getByText(/primeira letra/i);
@@ -79,7 +67,7 @@ describe('Search bar inputs', () => {
 });
 
 describe('Test the searchBar in the Meals component', () => {
-  test('Test the alert', () => {
+  test('Test the searchBar alert in the Meals component', () => {
     global.alert = jest.fn();
     const button = screen.getByTestId(testId);
     userEvent.click(button);

@@ -3,7 +3,6 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
-// import Profile from '../pages/Profile';
 
 describe('Testes da página de profile', () => {
   beforeEach(() => {
@@ -26,6 +25,7 @@ describe('Testes da página de profile', () => {
     expect(favRecipe).toBeInTheDocument();
     expect(logout).toBeInTheDocument();
     expect(email).toBeInTheDocument();
+    localStorage.setItem(email);
   });
   test('Test if are changing the route when the logout button is pressed', () => {
     const logout = screen.getByRole('button', { name: /logout/i });
@@ -43,11 +43,3 @@ describe('Testes da página de profile', () => {
     userEvent.click(FavRecipe);
   });
 });
-
-// describe('Test if doest have email', () => {
-//   test('', () => {
-//     render(<Profile />);
-//     const email = screen.getByTestId('profile-email');
-//     expect(email).not.toBeInTheDocument();
-//   });
-// });
