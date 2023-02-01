@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import Context from '../Context/Context';
@@ -11,6 +12,7 @@ function Drinks() {
   const DOZE = 12;
   const CINCO = 5;
   const drinksArray = [];
+  const history = useHistory();
   useEffect(() => {
     async function filtersData() {
       const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
@@ -116,6 +118,8 @@ function Drinks() {
         initialState.map((ele, i) => (
           <div
             key={ `${i}-recipe-card-drink-initial` }
+            onClick={ () => history.push(`/drinks/${ele.idDrink}`) }
+            aria-hidden="true"
             data-testid={ `${i}-recipe-card` }
           >
             <p data-testid={ `${i}-card-name` }>{ele.strDrink}</p>
