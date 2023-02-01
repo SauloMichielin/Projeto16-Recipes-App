@@ -4,25 +4,26 @@ import userEvent from '@testing-library/user-event';
 import { MemoryRouter } from 'react-router-dom';
 // import Login from '../pages/Login';
 import App from '../App';
+import ContextProvider from '../Context/ContextProvider';
 
 describe('test Login Page', () => {
   test('test if have the email input', () => {
-    render(<MemoryRouter><App /></MemoryRouter>);
+    render(<MemoryRouter><ContextProvider><App /></ContextProvider></MemoryRouter>);
     const email = screen.getByRole('textbox', { name: /email:/i });
     expect(email).toBeInTheDocument();
   });
   test('test if have the password input', () => {
-    render(<MemoryRouter><App /></MemoryRouter>);
+    render(<MemoryRouter><ContextProvider><App /></ContextProvider></MemoryRouter>);
     const password = screen.getByLabelText(/password:/i);
     expect(password).toBeInTheDocument();
   });
   test('test if have the button', () => {
-    render(<MemoryRouter><App /></MemoryRouter>);
+    render(<MemoryRouter><ContextProvider><App /></ContextProvider></MemoryRouter>);
     const button = screen.getByRole('button', { name: /enter/i });
     expect(button).toBeInTheDocument();
   });
   test('test if the button is disabled and turn enabled after put the email and password', () => {
-    render(<MemoryRouter><App /></MemoryRouter>);
+    render(<MemoryRouter><ContextProvider><App /></ContextProvider></MemoryRouter>);
     const button = screen.getByRole('button', { name: /enter/i });
     expect(button).toBeInTheDocument();
     expect(button).toBeDisabled();
