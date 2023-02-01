@@ -1,13 +1,16 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import Context from '../Context/Context';
 
 function Meals() {
   const { mealsResult } = useContext(Context);
+  console.log(mealsResult);
   const [initialState, setInitialState] = useState([]);
   const [filters, setFilters] = useState([]);
   const [filterSelect, setFilterSelect] = useState(false);
+  const history = useHistory();
   const DOZE = 12;
   const CINCO = 5;
   const mealsArray = [];
@@ -65,6 +68,7 @@ function Meals() {
     }
     setInitialState(arrayResult);
   };
+
   return (
     <main>
       <Header title="Meals" iconSearch />
@@ -112,6 +116,8 @@ function Meals() {
           initialState.map((ele, i) => (
             <div
               key={ `${i}-recipe-card-food-initial` }
+              onClick={ () => history.push(`/meals/${ele.idMeal}`) }
+              aria-hidden="true"
               data-testid={ `${i}-recipe-card` }
             >
               <p data-testid={ `${i}-card-name` }>{ele.strMeal}</p>
