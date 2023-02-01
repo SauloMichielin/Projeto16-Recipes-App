@@ -4,6 +4,7 @@ import Header from '../Components/Header';
 import Context from '../Context/Context';
 
 function Meals() {
+  // ajustes
   const { mealsResult } = useContext(Context);
   const [initialState, setInitialState] = useState([]);
   const [filters, setFilters] = useState([]);
