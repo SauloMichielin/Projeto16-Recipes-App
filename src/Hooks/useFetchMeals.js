@@ -7,9 +7,6 @@ function useFetchMeals() {
   const [idMeal, setIdMeal] = useState(0);
   const history = useHistory();
   const makeMealsFetch = async (filterOrSearch, endPoint) => {
-    // filterOrSearch tem que usar filter.php?i= OU search.php?s= OU search.php?f=
-    // filterOrSearch tem o parametro passado pelo radioButton
-    // endPoint tem que usar o que tem no Input
     try {
       setIsLoading(true);
       const response = await fetch(`https://www.themealdb.com/api/json/v1/1/${filterOrSearch}${endPoint}`);

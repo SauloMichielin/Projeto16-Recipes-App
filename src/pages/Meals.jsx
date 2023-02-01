@@ -5,11 +5,9 @@ import Context from '../Context/Context';
 
 function Meals() {
   const { mealsResult } = useContext(Context);
-  console.log(mealsResult);
   const [initialState, setInitialState] = useState([]);
   const [filters, setFilters] = useState([]);
   const [filterSelect, setFilterSelect] = useState(false);
-  // const [dataOfCategory, setDataOfCategory] = useState([]);
   const DOZE = 12;
   const CINCO = 5;
   const mealsArray = [];
@@ -67,7 +65,6 @@ function Meals() {
     }
     setInitialState(arrayResult);
   };
-
   return (
     <main>
       <Header title="Meals" iconSearch />
