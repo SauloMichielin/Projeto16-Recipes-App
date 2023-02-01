@@ -1,20 +1,31 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import Footer from '../Components/Footer';
 import Header from '../Components/Header';
 import Context from '../Context/Context';
 
 function Drinks() {
   const { drinksResult } = useContext(Context);
+  const [initialState, setInitialState] = useState([]);
   const DOZE = 12;
-  const array = [];
+  const DrinksArray = [];
+  // só para fazer um commit :)
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+      const result = await response.json();
+      for (let index = 0; index < DOZE; index += 1) {
+        setInitialState((prevState) => [...prevState, result.drinks[index]]);
+      }
+    } fetchData();
+  }, []);
   if (drinksResult.length > 1 && drinksResult.length < DOZE) {
     for (let index = 0; index < drinksResult.length; index += 1) {
-      array.push(drinksResult[index]);
+      DrinksArray.push(drinksResult[index]);
     }
   }
   if (drinksResult.length > 1 && drinksResult.length > DOZE) {
     for (let index = 0; index < DOZE; index += 1) {
-      array.push(drinksResult[index]);
+      DrinksArray.push(drinksResult[index]);
     }
   }
   /*
@@ -26,7 +37,18 @@ function Drinks() {
     <main>
       <Header title="Drinks" iconSearch />
       {
-        (array.length > 1 ? array.map((e, i) => (
+        initialState.map((ele, i) => (
+          <div
+            key={ i }
+            data-testid={ `${i}-recipe-card` }
+          >
+            <p data-testid={ `${i}-card-name` } key={ i }>{ele.strDrink}</p>
+            <img data-testid={ `${i}-card-img` } src={ ele.strDrinkThumb } alt="" />
+          </div>
+        ))
+      }
+      {
+        (DrinksArray.length > 1 ? DrinksArray.map((e, i) => (
           <div
             key={ e }
             data-testid={ `${i}-recipe-card` }
