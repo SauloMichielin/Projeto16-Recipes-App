@@ -6,7 +6,6 @@ import Context from '../Context/Context';
 
 function Meals() {
   const { mealsResult } = useContext(Context);
-  // console.log(mealsResult);
   const [initialState, setInitialState] = useState([]);
   const [filters, setFilters] = useState([]);
   const [filterSelect, setFilterSelect] = useState(false);
