@@ -2,15 +2,12 @@ import React from 'react';
 import './App.css';
 import { Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
-// import Meals from './pages/Meals';
-// import Drinks from './pages/Drinks';
 import DoneRecipes from './pages/DoneRecipes';
 import Profile from './pages/Profile';
 import FavoriteRecipes from './pages/FavoriteRecipes';
-import MealRecipeInProgress from './pages/MealRecipeInProgress';
-import DrinkRecipeInProgress from './pages/DrinkRecipeInProgress';
 import Recipes from './pages/Recipes';
 import RecipeDetails from './pages/RecipeDetails';
+import RecipeInProgress from './Components/RecipeInProgress';
 
 function App() {
   return (
@@ -27,12 +24,12 @@ function App() {
         <Route
           exact
           path="/meals/:id/in-progress"
-          component={ MealRecipeInProgress }
+          component={ RecipeInProgress }
         />
         <Route
           exact
-          path="/meals/:id/in-progress"
-          component={ DrinkRecipeInProgress }
+          path="/drinks/:id/in-progress"
+          component={ RecipeInProgress }
         />
         <Route exact path="/profile" component={ Profile } />
         <Route exact path="/done-recipes" component={ DoneRecipes } />
