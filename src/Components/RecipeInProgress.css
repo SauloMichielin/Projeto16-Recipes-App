@@ -1,0 +1,7 @@
+label, input[type="checkbox"] {
+  cursor: pointer;  
+}
+
+label:has(input[type="checkbox"]:checked) {
+  text-decoration: line-through solid rgb(0, 0, 0)
+}
