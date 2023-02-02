@@ -41,16 +41,18 @@ export default function RecipeInProgress() {
     return arrayzin;
   };
   const pap = ingredients(filterId);
-  console.log(ingredients(filterId));
+  console.log(filterId[0]);
 
   return (
     <div>
       <img
         data-testid="recipe-photo"
-        src="http://localhost:3000/meals/52771/in-progress"
+        src={ filterId[0] !== undefined ? filterId[0].strMealThumb : '' }
         alt="alt da imagem"
       />
-      <h2 data-testid="recipe-title">Título</h2>
+      <h2 data-testid="recipe-title">
+        { filterId[0] !== undefined ? filterId[0].strMeal : '' }
+      </h2>
       <button
         data-testid="share-btn"
         // onClick={ `${shareButton}` }
@@ -63,8 +65,12 @@ export default function RecipeInProgress() {
       >
         Favoritar
       </button>
-      <h3 data-testid="recipe-category">Categoria</h3>
-      <p data-testid="instructions">Instruções</p>
+      <h3 data-testid="recipe-category">
+        { filterId[0] !== undefined ? filterId[0].strCategory : '' }
+      </h3>
+      <p data-testid="instructions">
+        { filterId[0] !== undefined ? filterId[0].strInstructions : '' }
+      </p>
       { pap.map((a, index) => (
         <label
           htmlFor={ a }
