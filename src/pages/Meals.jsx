@@ -9,6 +9,7 @@ function Meals() {
   const [initialState, setInitialState] = useState([]);
   const [filters, setFilters] = useState([]);
   const [filterSelect, setFilterSelect] = useState(false);
+  // const [initialDrink, setInitialDrink] = useState([]);
   const history = useHistory();
   const DOZE = 12;
   const CINCO = 5;
