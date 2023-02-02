@@ -9,6 +9,7 @@ function Drinks() {
   const [initialState, setInitialState] = useState([]);
   const [filters, setFilters] = useState([]);
   const [filterSelect, setFilterSelect] = useState(false);
+  // const [initialMeal, setInitialMeal] = useState([]);
   const DOZE = 12;
   const CINCO = 5;
   const drinksArray = [];
@@ -39,6 +40,7 @@ function Drinks() {
       drinksArray.push(drinksResult[index]);
     }
   }
+  // console.log(initialMeal);
   /*
     receita
     imagem
