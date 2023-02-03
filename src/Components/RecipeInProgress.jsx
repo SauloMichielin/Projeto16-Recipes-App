@@ -2,9 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import './RecipeInProgress.css';
 
-// http://localhost:3000/meals/52771/in-progress
-// http://localhost:3000/drinks/178319/in-progress
-
 export default function RecipeInProgress() {
   const history = useHistory();
   const { id } = useParams();
@@ -51,22 +48,17 @@ export default function RecipeInProgress() {
     localStorage.setItem('inProgressRecipes', dadosText);
   };
 
-  // const parser = new DOMParser();
-  // const doc = parser.parseFromString(localStorage.getItem('inProgressRecipes')
-  //   .innerHTML, 'text/html');
-  // // console.log(doc.getElementsByClassName('checkboxIngredientes'));
-  // const oHtml = doc.getElementsByClassName('checkboxIngredientes');
-  // dados.innerHTML = oHtml;
-
+  const title = tipo === 'meals' ? 'strMeal' : 'strDrink';
+  const thumb = tipo === 'meals' ? 'strMealThumb' : 'strDrinkThumb';
   return (
     <div>
       <img
         data-testid="recipe-photo"
-        src={ filterId[0] !== undefined ? filterId[0].strMealThumb : '' }
+        src={ filterId[0] && filterId[0][thumb] }
         alt="alt da imagem"
       />
       <h2 data-testid="recipe-title">
-        { filterId[0] !== undefined ? filterId[0].strMeal : '' }
+        { filterId[0] && filterId[0][title] }
       </h2>
       <button
         data-testid="share-btn"

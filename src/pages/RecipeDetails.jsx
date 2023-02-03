@@ -9,6 +9,12 @@ export default function RecipeDetails() {
   // const [changeButton, setChangeButton] = useState('Start Recipe');
   const history = useHistory();
   const conditional = history.location.pathname.split('/')[1];
+  const rename = conditional === 'meals' ? (
+    conditional.replace('meals', 'Meal')
+  ) : (
+    conditional.replace('drinks', 'Drink')
+  );
+
   const idHistory = history.location.pathname.split('/')[2];
   const [localS, setLocalS] = useState([]);
   const SEIS = 6;
@@ -74,64 +80,46 @@ export default function RecipeDetails() {
   return (
     <>
       <div>Recipe Details</div>
-      {conditional === 'meals'
-      && recipe && recipe.meals.map((rec, i) => (
+      {recipe && recipe[conditional].map((rec, i) => (
         <div key={ i }>
           <div>
             <img
               data-testid="recipe-photo"
-              src={ rec.strMealThumb }
-              alt={ rec.strMeal }
+              src={ rec[`str${rename}Thumb`] }
+              alt={ rec[`str${rename}`] }
             />
-            <h2 data-testid="recipe-title">{ rec.strMeal }</h2>
-            <span data-testid="recipe-category">{ rec.strCategory }</span>
+            <h2 data-testid="recipe-title">{ rec[`str${rename}`] }</h2>
+            {conditional === 'meals' ? (
+              <span data-testid="recipe-category">{ rec.strCategory }</span>
+            ) : (
+              <span data-testid="recipe-category">{ rec.strAlcoholic }</span>
+            )}
             <ul style={ { listStyleType: 'none' } }>
               <li><h4>Ingredientes ----- Quantidades</h4></li>
               {ingredients(rec, 'strIngredient', 'strMeasure')}
             </ul>
             <p data-testid="instructions">{ rec.strInstructions }</p>
-            <video muted data-testid="video" width="320" height="240" controls>
-              <source src={ rec.strYoutube } type="video/mp4" />
-              <source src={ rec.strYoutube } type="video/ogg" />
-            </video>
+            {conditional === 'meals' && (
+              <video muted data-testid="video" width="320" height="240" controls>
+                <source src={ rec.strYoutube } type="video/mp4" />
+                <source src={ rec.strYoutube } type="video/ogg" />
+              </video>
+            )}
             <button type="button" data-testid="share-btn">Share</button>
             <button type="button" data-testid="favorite-btn">s2</button>
           </div>
           <div style={ styleCarousel }>
             {recomendation.map((items, ind) => (
               <div data-testid={ `${ind}-recommendation-card` } key={ ind }>
-                <h4 data-testid={ `${ind}-recommendation-title` }>{ items.strDrink }</h4>
-                <img src={ items.strDrinkThumb } alt={ items.strDrink } />
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
-
-      {conditional === 'drinks'
-      && recipe && recipe.drinks.map((rec, i) => (
-        <div key={ i }>
-          <div>
-            <img
-              data-testid="recipe-photo"
-              src={ rec.strDrinkThumb }
-              alt={ rec.strDrink }
-            />
-            <h2 data-testid="recipe-title">{ rec.strDrink }</h2>
-            <span data-testid="recipe-category">{ rec.strAlcoholic }</span>
-            <ul style={ { listStyleType: 'none' } }>
-              <li><h4>Ingredientes ----- Quantidades</h4></li>
-              {ingredients(rec, 'strIngredient', 'strMeasure')}
-            </ul>
-            <p data-testid="instructions">{ rec.strInstructions }</p>
-            <button type="button" data-testid="share-btn">Share</button>
-            <button type="button" data-testid="favorite-btn">s2</button>
-          </div>
-          <div style={ styleCarousel }>
-            {recomendation.map((items, ind) => (
-              <div data-testid={ `${ind}-recommendation-card` } key={ ind }>
-                <h4 data-testid={ `${ind}-recommendation-title` }>{ items.strMeal }</h4>
-                <img src={ items.strMealThumb } alt={ items.strMeal } />
+                <h4
+                  data-testid={ `${ind}-recommendation-title` }
+                >
+                  { items[`str${rename === 'Meal' ? 'Drink' : 'Meal'}`] }
+                </h4>
+                <img
+                  src={ items[`str${rename === 'Meal' ? 'Drink' : 'Meal'}Thumb`] }
+                  alt={ items[`str${rename === 'Meal' ? 'Drink' : 'Meal'}`] }
+                />
               </div>
             ))}
           </div>
@@ -142,7 +130,7 @@ export default function RecipeDetails() {
         data-testid="start-recipe-btn"
         style={ styleBtn }
         onClick={ () => {
-          history.push(`/meals/${idHistory}/in-progress`);
+          history.push(`/${conditional}/${idHistory}/in-progress`);
         } }
       >
         Start Recipe
