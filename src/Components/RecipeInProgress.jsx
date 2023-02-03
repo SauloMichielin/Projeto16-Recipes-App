@@ -10,7 +10,7 @@ export default function RecipeInProgress() {
   const { id } = useParams();
   const tipo = (history.location.pathname).split('/')[1];
   const [filterId, setFilterId] = useState(false);
-  const VINTE = 20;
+  const QUINZE = 15;
 
   useEffect(() => {
     async function filtersData() {
@@ -32,7 +32,7 @@ export default function RecipeInProgress() {
   const ingredients = (param) => {
     const arrayzin = [];
     if (param[0] !== undefined) {
-      for (let i = 1; i <= VINTE; i += 1) {
+      for (let i = 1; i <= QUINZE; i += 1) {
         if (param[0][`strIngredient${i}`] !== null
         && param[0][`strIngredient${i}`].length > 0) {
           arrayzin.push(param[0][`strIngredient${i}`]);
@@ -51,12 +51,12 @@ export default function RecipeInProgress() {
     localStorage.setItem('inProgressRecipes', dadosText);
   };
 
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(localStorage.getItem('inProgressRecipes')
-    .innerHTML, 'text/html');
-  // console.log(doc.getElementsByClassName('checkboxIngredientes'));
-  const oHtml = doc.getElementsByClassName('checkboxIngredientes');
-  dados.innerHTML = oHtml;
+  // const parser = new DOMParser();
+  // const doc = parser.parseFromString(localStorage.getItem('inProgressRecipes')
+  //   .innerHTML, 'text/html');
+  // // console.log(doc.getElementsByClassName('checkboxIngredientes'));
+  // const oHtml = doc.getElementsByClassName('checkboxIngredientes');
+  // dados.innerHTML = oHtml;
 
   return (
     <div>
@@ -93,9 +93,14 @@ export default function RecipeInProgress() {
             htmlFor={ a }
             key={ index }
             data-testid={ `${index}-ingredient-step` }
-            className="checkboxIngredientes"
           >
-            <input type="checkbox" name={ a } id={ a } onClick={ storageLocal } />
+            <input
+              type="checkbox"
+              name={ a }
+              id={ a }
+              className="checkbox2"
+              onClick={ storageLocal }
+            />
             { a }
           </label>
         )) }
