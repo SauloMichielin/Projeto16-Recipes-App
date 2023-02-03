@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { require } from 'clipboard-copy';
 import Header from '../Components/Header';
 import shareImg from '../images/shareIcon.svg';
-import localSto from '../mockTemp';
+// import doneRecipes from '../mockTemp';
 
 function DoneRecipes() {
   const [localS, setLocalS] = useState([]);
@@ -13,33 +13,33 @@ function DoneRecipes() {
   const copy = require('clipboard-copy');
   const items = [];
   useEffect(() => {
-    const lS = JSON.parse(localStorage.getItem('doneRecipe'));
-    if (lS) {
-      setLocalS(lS);
-    } else if (!lS) {
-      setLocalS(localSto);
-    }
+    // localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+    const lS = JSON.parse(localStorage.getItem('doneRecipes'));
+    setLocalS(lS);
   }, []);
-  if (filter === 'All') {
+
+  console.log(items);
+  console.log(localS);
+  console.log(filter);
+  if (filter === 'All' && localS) {
     localS.filter((e) => items.push(e));
   }
-  if (filter === 'Meals') {
+  if (filter === 'Meals' && localS) {
     localS.filter((e) => e.type === 'meal' && items.push(e));
   }
-  if (filter === 'Drinks') {
+  if (filter === 'Drinks' && localS) {
     localS.filter((e) => e.type === 'drink' && items.push(e));
   }
-  /* [{
-    id: id-da-receita,
-    type: meal-ou-drink,
-    nationality: nacionalidade-da-receita-ou-texto-vazio,
-    category: categoria-da-receita-ou-texto-vazio,
-    alcoholicOrNot: alcoholic-ou-non-alcoholic-ou-texto-vazio,
-    name: nome-da-receita,
-    image: imagem-da-receita,
-    doneDate: quando-a-receita-foi-concluida,
-    tags: array-de-tags-da-receita-ou-array-vazio
-    }] */
+  /* id: '52771',
+    type: 'meal',
+    nationality: 'Italian',
+    category: 'Vegetarian',
+    alcoholicOrNot: '',
+    name: 'Spicy Arrabiata Penne',
+    image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
+    doneDate: '23/06/2020',
+    tags: ['Pasta', 'Curry'],
+  */
 
   return (
     <section>
@@ -55,10 +55,10 @@ function DoneRecipes() {
       </button>
       {
         items.map((e, i) => (
-          (e.type === 'meals' ? (
+          (e.type === 'meal' ? (
             <div key={ i }>
               <div
-                onClick={ () => history.push(`/${e.type}/${e.id}`) }
+                onClick={ () => history.push(`/${e.type}s/${e.id}`) }
                 aria-hidden="true"
               >
                 <img
@@ -68,20 +68,23 @@ function DoneRecipes() {
                 />
                 <h2 data-testid={ `${i}-horizontal-name` }>{e.name}</h2>
               </div>
-              <h3 data-testid={ `${i}-horizontal-top-text` }>
+              <h4
+                data-testid={ `${i}-horizontal-top-text` }
+              >
                 {`${e.nationality} - ${e.category}`}
-              </h3>
+              </h4>
               <h4 data-testid={ `${i}-horizontal-done-date` }>{ e.doneDate }</h4>
-              <h5 data-testid={ `${i}-${e.tags[i]}-horizontal-tag` }>
-                { e.tags.length > 0 && `${e.tags[0]}, ${e.tags[1]}` }
-              </h5>
+              <h5 data-testid={ `${i}-${e.tags[0]}-horizontal-tag` }>{ e.tags[0]}</h5>
+              <h5 data-testid={ `${i}-${e.tags[1]}-horizontal-tag` }>{ e.tags[1]}</h5>
               <div
                 data-testid={ `${i}-horizontal-share-btn` }
                 onClick={ () => {
-                  copy(`http://localhost:3000/${e.type}/${e.id}`);
+                  copy(`http://localhost:3000/${e.type}s/${e.id}`);
                   setShowOrHide(+e.id);
                 } }
                 aria-hidden="true"
+                src={ shareImg }
+                alt="Compartilhar"
               >
                 <img
                   src={ shareImg }
@@ -89,7 +92,7 @@ function DoneRecipes() {
                 />
                 <br />
                 <h4
-                  style={ { display: +showOrHide === +e.id ? 'content' : 'none' } }
+                  style={ { display: showOrHide === +e.id ? 'content' : 'none' } }
                 >
                   Link copied!
                 </h4>
@@ -98,7 +101,7 @@ function DoneRecipes() {
           ) : (
             <div key={ i }>
               <div
-                onClick={ () => history.push(`/${e.type}/${e.id}`) }
+                onClick={ () => history.push(`/${e.type}s/${e.id}`) }
                 aria-hidden="true"
               >
                 <img
@@ -113,11 +116,12 @@ function DoneRecipes() {
               <div
                 data-testid={ `${i}-horizontal-share-btn` }
                 onClick={ () => {
-                  copy(`http://localhost:3000/${e.type}/${e.id}`);
+                  copy(`http://localhost:3000/${e.type}s/${e.id}`);
                   setShowOrHide(+e.id);
-                  console.log('clickou');
                 } }
                 aria-hidden="true"
+                src={ shareImg }
+                alt="Compartilhar"
               >
                 <img
                   src={ shareImg }
@@ -125,7 +129,7 @@ function DoneRecipes() {
                 />
                 <br />
                 <h4
-                  style={ { display: +showOrHide === +e.id ? 'content' : 'none' } }
+                  style={ { display: showOrHide === +e.id ? 'content' : 'none' } }
                 >
                   Link copied!
                 </h4>

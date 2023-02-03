@@ -1,3 +1,7 @@
 label:has( input:checked ) {
   text-decoration: line-through solid black;
 }
+
+.checkbox1 {
+  background-color: blueviolet;
+}
