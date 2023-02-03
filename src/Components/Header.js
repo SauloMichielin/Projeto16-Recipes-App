@@ -5,6 +5,8 @@ import searchIcon from '../images/searchIcon.svg';
 import profileIcon from '../images/profileIcon.svg';
 import SearchBar from './SearchBar';
 
+// lint amo vc <3
+
 function Header({ title, iconSearch }) {
   const [showElement, setShowElement] = useState(false);
 
