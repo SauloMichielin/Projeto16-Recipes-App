@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Header from '../Components/Header';
 import shareImg from '../images/shareIcon.svg';
-// import doneRecipes from '../mockTemp';
 
 function DoneRecipes() {
   const [localS, setLocalS] = useState([]);
@@ -11,14 +10,10 @@ function DoneRecipes() {
   const [showOrHide, setShowOrHide] = useState(0);
   const items = [];
   useEffect(() => {
-    // localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
     const lS = JSON.parse(localStorage.getItem('doneRecipes'));
     setLocalS(lS);
   }, []);
 
-  console.log(items);
-  console.log(localS);
-  console.log(filter);
   if (filter === 'All' && localS) {
     localS.filter((e) => items.push(e));
   }
@@ -28,16 +23,6 @@ function DoneRecipes() {
   if (filter === 'Drinks' && localS) {
     localS.filter((e) => e.type === 'drink' && items.push(e));
   }
-  /* id: '52771',
-    type: 'meal',
-    nationality: 'Italian',
-    category: 'Vegetarian',
-    alcoholicOrNot: '',
-    name: 'Spicy Arrabiata Penne',
-    image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
-    doneDate: '23/06/2020',
-    tags: ['Pasta', 'Curry'],
-  */
 
   return (
     <section>
@@ -117,9 +102,6 @@ function DoneRecipes() {
                   navigator.clipboard.writeText(`http://localhost:3000/${e.type}s/${e.id}`);
                   setShowOrHide(+e.id);
                 } }
-                /*
-                onClick={() => {navigator.clipboard.writeText(`http://localhost:3000/${e.type}s/${e.id}`)}}
-                */
                 aria-hidden="true"
                 src={ shareImg }
                 alt="Compartilhar"

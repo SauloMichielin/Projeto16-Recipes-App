@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../Components/Header';
-import doneRecipes from '../mockTemp';
 import blackHeart from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 
@@ -11,20 +10,18 @@ function FavoriteRecipes() {
   const listFav = [];
 
   useEffect(() => {
-    localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
-    const lS = JSON.parse(localStorage.getItem('doneRecipes'));
+    const lS = JSON.parse(localStorage.getItem('favoriteRecipes'));
     setLocalS(lS);
   }, []);
 
   if (filter === 'All') {
     localS.filter((tag) => listFav.push(tag));
-    console.log('Botão All acionado');
-  } else if (filter === 'Meals') {
+  }
+  if (filter === 'Meals') {
     localS.filter((tag) => tag.type === 'meal' && listFav.push(tag));
-    console.log('Botão Meals acionado');
-  } else if (filter === 'Drinks') {
+  }
+  if (filter === 'Drinks') {
     localS.filter((tag) => tag.type === 'drink' && listFav.push(tag));
-    console.log('Botão Drinks acionado');
   }
 
   return (
