@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../Components/Header';
-// import doneRecipes from '../mockTemp';
+import doneRecipes from '../mockTemp';
 import blackHeart from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 
@@ -11,7 +11,7 @@ function FavoriteRecipes() {
   const listFav = [];
 
   useEffect(() => {
-    // localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+    localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
     const lS = JSON.parse(localStorage.getItem('doneRecipes'));
     setLocalS(lS);
   }, []);
