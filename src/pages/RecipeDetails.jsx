@@ -9,7 +9,7 @@ import share from '../images/shareIcon.svg';
 export default function RecipeDetails() {
   const [recipe, setRecipe] = useState();
   const [recomendation, setRecomendation] = useState([]);
-  // const [changeButton, setChangeButton] = useState('Start Recipe');
+  const [changeButton, setChangeButton] = useState('Start Recipe');
   const [favorite, setFavorite] = useState(whiteHeart);
   const history = useHistory();
   const conditional = history.location.pathname.split('/')[1];
@@ -20,13 +20,10 @@ export default function RecipeDetails() {
   );
 
   const idHistory = history.location.pathname.split('/')[2];
-  const [localS, setLocalS] = useState([]);
   const SEIS = 6;
+  const [showOrHide, setShowOrHide] = useState(0);
 
   useEffect(() => {
-    localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
-    const lS = JSON.parse(localStorage.getItem('doneRecipes'));
-    setLocalS(lS);
     async function showRecipe() {
       if (conditional === 'meals') {
         const responseDrink = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
@@ -49,9 +46,23 @@ export default function RecipeDetails() {
         setRecipe(data);
       }
     } showRecipe();
+    function heart() {
+      const idLs = JSON.parse(localStorage.getItem('favoriteRecipes'));
+      return idLs && (
+        idHistory === idLs[0].id ? setFavorite(blackHeart) : setFavorite(whiteHeart)
+      );
+    } heart();
+    function done() {
+      localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+      const lS = JSON.parse(localStorage.getItem('doneRecipes'));
+      return (idHistory === lS.map((e) => e.id).find((i) => i === idHistory) ? (
+        setChangeButton('Continue Recipe')
+      ) : (
+        setChangeButton('Start Recipe')
+      )
+      );
+    } done();
   }, []);
-  console.log(localS.map((k) => k.id));
-  console.log(recipe);
 
   const ingredients = (param, param2, param3) => {
     const VINTE = 20;
@@ -86,20 +97,18 @@ export default function RecipeDetails() {
       ? setFavorite(blackHeart) : setFavorite(whiteHeart)
   );
 
-  const favLocalSt = (event) => (
-    favorite === blackHeart ? (
-      localStorage.setItem('favoriteRecipes', JSON.stringify(recipe && recipe[conditional]
-        .find((r) => r[`str${rename}`] === event
-          .target.parentNode.children[1].innerText)
-        .map((e) => [{
+  const favLocalSt = () => (
+    favorite === whiteHeart ? (
+      localStorage.setItem('favoriteRecipes', JSON.stringify(recipe[conditional]
+        .map((e) => ({
           id: e[`id${rename}`],
-          type: rename,
-          nationality: e.strArea,
-          category: e.strCategory,
-          alcoholicOrNot: e.alcoholicOrNot,
+          type: rename === 'Meal' ? 'meal' : 'drink',
+          nationality: e.strArea ? e.strArea : '',
+          category: e.strCategory ? e.strCategory : '',
+          alcoholicOrNot: e.strAlcoholic ? e.strAlcoholic : '',
           name: e[`str${rename}`],
           image: e[`str${rename}Thumb`],
-        }])))) : ''
+        }))))) : localStorage.removeItem('favoriteRecipes')
   );
 
   return (
@@ -130,17 +139,33 @@ export default function RecipeDetails() {
                 <source src={ rec.strYoutube } type="video/ogg" />
               </video>
             )}
-            <img
+            <div
+              data-testid="share-btn"
+              onClick={ () => {
+                navigator.clipboard.writeText(`http://localhost:3000${history.location.pathname}`);
+                setShowOrHide(idHistory);
+              } }
+              aria-hidden="true"
               src={ share }
               alt="Compartilhar"
-              style={ { width: '25%' } }
-            />
+            >
+              <img
+                src={ share }
+                alt="Compartilhar"
+              />
+              <br />
+              <h4
+                style={ { display: showOrHide !== idHistory ? 'none' : 'content' } }
+              >
+                Link copied!
+              </h4>
+            </div>
             <img
               src={ favorite }
               style={ { width: '25%' } }
-              onClick={ (event) => {
+              onClick={ () => {
                 desFav();
-                favLocalSt(event);
+                favLocalSt();
               } }
               aria-hidden="true"
               data-testid="favorite-btn"
@@ -172,7 +197,7 @@ export default function RecipeDetails() {
           history.push(`/${conditional}/${idHistory}/in-progress`);
         } }
       >
-        Start Recipe
+        {changeButton}
       </button>
     </>
   );
