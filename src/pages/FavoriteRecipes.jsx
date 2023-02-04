@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { require } from 'clipboard-copy';
 import Header from '../Components/Header';
-import doneRecipes from '../mockTemp';
+// import doneRecipes from '../mockTemp';
 import blackHeart from '../images/blackHeartIcon.svg';
 import shareIcon from '../images/shareIcon.svg';
 
@@ -10,12 +9,9 @@ function FavoriteRecipes() {
   const [localS, setLocalS] = useState([]);
   const [showOrHide, setShowOrHide] = useState(0);
   const listFav = [];
-  const copy = require('clipboard-copy');
-
-  console.log(copy);
 
   useEffect(() => {
-    localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
+    // localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
     const lS = JSON.parse(localStorage.getItem('doneRecipes'));
     setLocalS(lS);
   }, []);
@@ -72,7 +68,7 @@ function FavoriteRecipes() {
               </h4>
               <div
                 onClick={ () => {
-                  copy(`http://localhost:3000/${tag.type}s/${tag.id}`);
+                  navigator.clipboard.writeText(`http://localhost:3000/${tag.type}s/${tag.id}`);
                   setShowOrHide(+tag.id);
                 } }
                 data-testid={ `${i}-horizontal-share-btn` }
@@ -117,7 +113,7 @@ function FavoriteRecipes() {
               </h4>
               <div
                 onClick={ () => {
-                  copy(`http://localhost:3000/${tag.type}s/${tag.id}`);
+                  navigator.clipboard.writeText(`http://localhost:3000/${tag.type}s/${tag.id}`);
                   setShowOrHide(+tag.id);
                 } }
                 data-testid={ `${i}-horizontal-share-btn` }
