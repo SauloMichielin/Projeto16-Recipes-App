@@ -2,11 +2,15 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import doneRecipes from '../mockTemp';
+import whiteHeart from '../images/whiteHeartIcon.svg';
+import blackHeart from '../images/blackHeartIcon.svg';
+import share from '../images/shareIcon.svg';
 
 export default function RecipeDetails() {
   const [recipe, setRecipe] = useState();
   const [recomendation, setRecomendation] = useState([]);
   // const [changeButton, setChangeButton] = useState('Start Recipe');
+  const [favorite, setFavorite] = useState(whiteHeart);
   const history = useHistory();
   const conditional = history.location.pathname.split('/')[1];
   const rename = conditional === 'meals' ? (
@@ -46,8 +50,8 @@ export default function RecipeDetails() {
       }
     } showRecipe();
   }, []);
-  console.log(recomendation);
   console.log(localS.map((k) => k.id));
+  console.log(recipe);
 
   const ingredients = (param, param2, param3) => {
     const VINTE = 20;
@@ -77,6 +81,27 @@ export default function RecipeDetails() {
     marginLeft: '25%',
   };
 
+  const desFav = () => (
+    favorite === whiteHeart
+      ? setFavorite(blackHeart) : setFavorite(whiteHeart)
+  );
+
+  const favLocalSt = (event) => (
+    favorite === blackHeart ? (
+      localStorage.setItem('favoriteRecipes', JSON.stringify(recipe && recipe[conditional]
+        .find((r) => r[`str${rename}`] === event
+          .target.parentNode.children[1].innerText)
+        .map((e) => [{
+          id: e[`id${rename}`],
+          type: rename,
+          nationality: e.strArea,
+          category: e.strCategory,
+          alcoholicOrNot: e.alcoholicOrNot,
+          name: e[`str${rename}`],
+          image: e[`str${rename}Thumb`],
+        }])))) : ''
+  );
+
   return (
     <>
       <div>Recipe Details</div>
@@ -105,8 +130,22 @@ export default function RecipeDetails() {
                 <source src={ rec.strYoutube } type="video/ogg" />
               </video>
             )}
-            <button type="button" data-testid="share-btn">Share</button>
-            <button type="button" data-testid="favorite-btn">s2</button>
+            <img
+              src={ share }
+              alt="Compartilhar"
+              style={ { width: '25%' } }
+            />
+            <img
+              src={ favorite }
+              style={ { width: '25%' } }
+              onClick={ (event) => {
+                desFav();
+                favLocalSt(event);
+              } }
+              aria-hidden="true"
+              data-testid="favorite-btn"
+              alt="Desfavorito"
+            />
           </div>
           <div style={ styleCarousel }>
             {recomendation.map((items, ind) => (
