@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { require } from 'clipboard-copy';
 import Header from '../Components/Header';
 import shareImg from '../images/shareIcon.svg';
 // import doneRecipes from '../mockTemp';
@@ -10,7 +9,6 @@ function DoneRecipes() {
   const [filter, setFilter] = useState('All');
   const history = useHistory();
   const [showOrHide, setShowOrHide] = useState(0);
-  const copy = require('clipboard-copy');
   const items = [];
   useEffect(() => {
     // localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
@@ -79,7 +77,7 @@ function DoneRecipes() {
               <div
                 data-testid={ `${i}-horizontal-share-btn` }
                 onClick={ () => {
-                  copy(`http://localhost:3000/${e.type}s/${e.id}`);
+                  navigator.clipboard.writeText(`http://localhost:3000/${e.type}s/${e.id}`);
                   setShowOrHide(+e.id);
                 } }
                 aria-hidden="true"
@@ -116,9 +114,12 @@ function DoneRecipes() {
               <div
                 data-testid={ `${i}-horizontal-share-btn` }
                 onClick={ () => {
-                  copy(`http://localhost:3000/${e.type}s/${e.id}`);
+                  navigator.clipboard.writeText(`http://localhost:3000/${e.type}s/${e.id}`);
                   setShowOrHide(+e.id);
                 } }
+                /*
+                onClick={() => {navigator.clipboard.writeText(`http://localhost:3000/${e.type}s/${e.id}`)}}
+                */
                 aria-hidden="true"
                 src={ shareImg }
                 alt="Compartilhar"
