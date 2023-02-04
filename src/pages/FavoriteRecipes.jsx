@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from 'react';
+import { require } from 'clipboard-copy';
 import Header from '../Components/Header';
 import doneRecipes from '../mockTemp';
+import blackHeart from '../images/blackHeartIcon.svg';
+import shareIcon from '../images/shareIcon.svg';
 
 function FavoriteRecipes() {
   const [filter, setFilter] = useState('All');
   const [localS, setLocalS] = useState([]);
+  const [showOrHide, setShowOrHide] = useState(0);
   const listFav = [];
+  const copy = require('clipboard-copy');
+
+  console.log(copy);
 
   useEffect(() => {
     localStorage.setItem('doneRecipes', JSON.stringify(doneRecipes));
@@ -63,16 +70,32 @@ function FavoriteRecipes() {
               <h4 data-testid={ `${i}-horizontal-top-text` }>
                 {`${tag.nationality} - ${tag.category}`}
               </h4>
-              <img
-                type="button"
+              <div
+                onClick={ () => {
+                  copy(`http://localhost:3000/${tag.type}s/${tag.id}`);
+                  setShowOrHide(+tag.id);
+                } }
                 data-testid={ `${i}-horizontal-share-btn` }
-                src="src/images/shareIcon.svg"
+                src={ shareIcon }
                 alt="Share button"
-              />
+                aria-hidden
+              >
+                <img
+                  type="button"
+                  src={ shareIcon }
+                  alt="Share button"
+                />
+                <br />
+                <h4
+                  style={ { display: showOrHide === +tag.id ? 'content' : 'none' } }
+                >
+                  Link copied!
+                </h4>
+              </div>
               <img
                 type="button"
                 data-testid={ `${i}-horizontal-favorite-btn` }
-                src="src/images/blackHeartIcon.svg"
+                src={ blackHeart }
                 alt="Favorite Button"
               />
             </div>
@@ -92,16 +115,32 @@ function FavoriteRecipes() {
               <h4 data-testid={ `${i}-horizontal-top-text` }>
                 { tag.alcoholicOrNot }
               </h4>
-              <img
-                type="button"
+              <div
+                onClick={ () => {
+                  copy(`http://localhost:3000/${tag.type}s/${tag.id}`);
+                  setShowOrHide(+tag.id);
+                } }
                 data-testid={ `${i}-horizontal-share-btn` }
-                src="src/images/shareIcon.svg"
+                src={ shareIcon }
                 alt="Share button"
-              />
+                aria-hidden
+              >
+                <img
+                  type="button"
+                  src={ shareIcon }
+                  alt="Share button"
+                />
+                <br />
+                <h4
+                  style={ { display: showOrHide === +tag.id ? 'content' : 'none' } }
+                >
+                  Link copied!
+                </h4>
+              </div>
               <img
                 type="button"
                 data-testid={ `${i}-horizontal-favorite-btn` }
-                src="src/images/blackHeartIcon.svg"
+                src={ blackHeart }
                 alt="Favorite Button"
               />
             </div>
