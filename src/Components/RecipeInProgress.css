@@ -1,7 +1,7 @@
-label, input [ type = 'checkbox' ] {
-  cursor: pointer;
+label:has( input:checked ) {
+  text-decoration: line-through solid black;
 }
 
-label:has( input [ type = 'checkbox' ]:checked ) {
-  text-decoration: line-through solid black;
+.checkbox1 {
+  background-color: blueviolet;
 }

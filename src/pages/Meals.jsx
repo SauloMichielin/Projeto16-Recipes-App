@@ -106,7 +106,9 @@ function Meals() {
           mealsArray.map((e, i) => (
             <div
               key={ `${i}-recipe-card-food` }
+              onClick={ () => history.push(`/meals/${e.idMeal}`) }
               data-testid={ `${i}-recipe-card` }
+              aria-hidden="true"
             >
               <p data-testid={ `${i}-card-name` }>{e.strMeal}</p>
               <img data-testid={ `${i}-card-img` } src={ e.strMealThumb } alt="" />

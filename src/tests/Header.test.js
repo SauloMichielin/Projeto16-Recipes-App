@@ -15,8 +15,17 @@ beforeEach(() => {
   userEvent.click(button);
 });
 
+afterEach(() => {
+  jest.clearAllMocks();
+});
+
 const testId = 'search-top-btn';
-// ------------------------------------------------------------------------------------
+
+/*
+
+----------------------------------------------------------------------------------
+
+*/
 
 describe('', () => {
   test('test if exist a h2 in the component', () => {
@@ -67,6 +76,12 @@ describe('', () => {
   });
 });
 
+/*
+
+----------------------------------------------------------------------------------
+
+*/
+
 describe('Test the searchBar in the Meals component', () => {
   test('Test the ingredients radio button', () => {
     const button = screen.getByTestId(testId);
@@ -102,46 +117,63 @@ describe('Test the searchBar in the Meals component', () => {
   });
 });
 
-describe('Test the alerts from the searchBar in the Meals component', () => {
-  test('Test if throw a alert in the ingredients radio button', () => {
-    global.alert = jest.fn();
-    const button = screen.getByTestId(testId);
-    userEvent.click(button);
-    const input = screen.getByRole('textbox');
-    const ingrediente = screen.getByText(/ingrediente/i);
-    const buscarBtn = screen.getByRole('button', { name: /buscar/i });
-    userEvent.type(input, 'Xablau');
-    userEvent.click(ingrediente);
-    userEvent.click(buscarBtn);
-    expect(global.alert).toHaveBeenCalledTimes(1);
-  });
+/*
 
-  test('Test if throw a alert in the name radio button', () => {
-    global.alert = jest.fn();
-    const button = screen.getByTestId(testId);
-    userEvent.click(button);
-    const input = screen.getByRole('textbox');
-    const nome = screen.getByText(/nome/i);
-    const buscarBtn = screen.getByRole('button', { name: /buscar/i });
-    userEvent.type(input, 'Xablau');
-    userEvent.click(nome);
-    userEvent.click(buscarBtn);
-    expect(global.alert).toHaveBeenCalledTimes(1);
-  });
+----------------------------------------------------------------------------------
 
-  test('Test if throw a alert in the Meals component', () => {
-    global.alert = jest.fn();
+*/
+const descr = 'Test the alert from the searchBar in the Meals component';
+
+describe(descr, () => {
+  test('Test if throw a alert in the ingredients radio button', async () => {
     const button = screen.getByTestId(testId);
     userEvent.click(button);
-    const letra = screen.getByText(/primeira letra/i);
-    const input = screen.getByRole('textbox');
-    const buscarBtn = screen.getByRole('button', { name: /buscar/i });
-    userEvent.type(input, 'aa');
-    userEvent.click(letra);
-    userEvent.click(buscarBtn);
+    global.alert = jest.fn();
+    const input = screen.findByRole('textbox');
+    const ingrediente = screen.findByText(/ingrediente/i);
+    const buscarBtn = screen.findByRole('button', { name: /buscar/i });
+    userEvent.type(await input, '0');
+    userEvent.click(await ingrediente);
+    userEvent.click(await buscarBtn);
     expect(global.alert).toHaveBeenCalledTimes(1);
   });
 });
+
+describe(descr, () => {
+  test('Test if throw a alert in the name radio button', async () => {
+    const button = screen.getByTestId(testId);
+    userEvent.click(button);
+    global.alert = jest.fn();
+    const input = screen.findByRole('textbox');
+    const nome = screen.findByText(/nome/i);
+    const buscarBtn = screen.findByRole('button', { name: /buscar/i });
+    userEvent.type(await input, '0');
+    userEvent.click(await nome);
+    userEvent.click(await buscarBtn);
+    expect(global.alert).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe(descr, () => {
+  test('Test if throw a alert in the Meals component', async () => {
+    const button = screen.getByTestId(testId);
+    userEvent.click(button);
+    global.alert = jest.fn();
+    const letra = screen.findByText(/primeira letra/i);
+    const input = screen.findByRole('textbox');
+    const buscarBtn = screen.findByRole('button', { name: /buscar/i });
+    userEvent.type(await input, 'aa');
+    userEvent.click(await letra);
+    userEvent.click(await buscarBtn);
+    expect(global.alert).toHaveBeenCalledTimes(1);
+  });
+});
+
+/*
+
+----------------------------------------------------------------------------------
+
+*/
 
 describe('Test the searchBar in the Drinks component', () => {
   beforeEach(() => {
@@ -151,64 +183,75 @@ describe('Test the searchBar in the Drinks component', () => {
     const button = screen.getByTestId(testId);
     userEvent.click(button);
   });
-  test('Search bar inputs', () => {
-    const button = screen.getByTestId(testId);
-    userEvent.click(button);
-    const letra = screen.getByText(/primeira letra/i);
-    const input = screen.getByRole('textbox');
-    const buscarBtn = screen.getByRole('button', { name: /buscar/i });
-    userEvent.type(input, 'a');
-    userEvent.click(letra);
-    userEvent.click(buscarBtn);
-  });
-  test('Test the alert', () => {
-    global.alert = jest.fn();
-    const input = screen.getByRole('textbox');
-    const letra = screen.getByText(/primeira letra/i);
-    const buscarBtn = screen.getByRole('button', { name: /buscar/i });
-    userEvent.type(input, 'aa');
-    userEvent.click(letra);
-    userEvent.click(buscarBtn);
-    expect(global.alert).toHaveBeenCalledTimes(1);
+  test('Test the firts letter radio button', async () => {
+    const input = screen.findByRole('textbox');
+    const letra = screen.findByText(/primeira letra/i);
+    const buscarBtn = screen.findByRole('button', { name: /buscar/i });
+    userEvent.type(await input, 'a');
+    userEvent.click(await letra);
+    userEvent.click(await buscarBtn);
   });
 
-  test('Test the ingredients radio button', () => {
-    const input = screen.getByRole('textbox');
-    const ingrediente = screen.getByText(/ingrediente/i);
-    const buscarBtn = screen.getByRole('button', { name: /buscar/i });
-    userEvent.type(input, 'Chicken');
-    userEvent.click(ingrediente);
-    userEvent.click(buscarBtn);
+  test('Test the ingredients radio button', async () => {
+    const input = screen.findByRole('textbox');
+    const ingrediente = screen.findByText(/ingrediente/i);
+    const buscarBtn = screen.findByRole('button', { name: /buscar/i });
+    userEvent.type(await input, 'vodka');
+    userEvent.click(await ingrediente);
+    userEvent.click(await buscarBtn);
   });
 
-  test('Test the name radio button', () => {
-    const input = screen.getByRole('textbox');
-    const nome = screen.getByText(/nome/i);
-    const buscarBtn = screen.getByRole('button', { name: /buscar/i });
-    userEvent.type(input, 'Chicken');
-    userEvent.click(nome);
-    userEvent.click(buscarBtn);
+  test('Test the name radio button', async () => {
+    const input = screen.findByRole('textbox');
+    const nome = screen.findByText(/nome/i);
+    const buscarBtn = screen.findByRole('button', { name: /buscar/i });
+    userEvent.type(await input, 'vodka');
+    userEvent.click(await nome);
+    userEvent.click(await buscarBtn);
   });
 });
 
-describe('', () => {
-  beforeEach(() => {
+describe('Test if throw a alert in the Drinks component', () => {
+  test('first letter radio button', async () => {
     const drinksBtn = screen.getByRole('button', { name: /bebidas/i });
-    expect(drinksBtn).toBeInTheDocument();
     userEvent.click(drinksBtn);
     const button = screen.getByTestId(testId);
     userEvent.click(button);
-  });
-  test('Test if throw a alert in the Drinks component', () => {
     global.alert = jest.fn();
+    const letra = screen.findByText(/primeira letra/i);
+    const input = screen.findByRole('textbox');
+    const buscarBtn = screen.findByRole('button', { name: /buscar/i });
+    userEvent.type(await input, 'aa');
+    userEvent.click(await letra);
+    userEvent.click(await buscarBtn);
+    expect(global.alert).toHaveBeenCalledTimes(1);
+  });
+  test('ingredients radio button', async () => {
+    const drinksBtn = screen.getByRole('button', { name: /bebidas/i });
+    userEvent.click(drinksBtn);
     const button = screen.getByTestId(testId);
     userEvent.click(button);
-    const letra = screen.getByText(/primeira letra/i);
-    const input = screen.getByRole('textbox');
-    const buscarBtn = screen.getByRole('button', { name: /buscar/i });
-    userEvent.type(input, 'aa');
-    userEvent.click(letra);
-    userEvent.click(buscarBtn);
+    global.alert = jest.fn();
+    const ingrediente = screen.findByText(/ingrediente/i);
+    const input = screen.findByRole('textbox');
+    const buscarBtn = screen.findByRole('button', { name: /buscar/i });
+    userEvent.type(await input, 'aa');
+    userEvent.click(await ingrediente);
+    userEvent.click(await buscarBtn);
+    expect(global.alert).toHaveBeenCalledTimes(1);
+  });
+  test('name radio button', async () => {
+    const drinksBtn = screen.getByRole('button', { name: /bebidas/i });
+    userEvent.click(drinksBtn);
+    const button = screen.getByTestId(testId);
+    userEvent.click(button);
+    global.alert = jest.fn();
+    const nome = screen.findByText(/nome/i);
+    const input = screen.findByRole('textbox');
+    const buscarBtn = screen.findByRole('button', { name: /buscar/i });
+    userEvent.type(await input, 'aa');
+    userEvent.click(await nome);
+    userEvent.click(await buscarBtn);
     expect(global.alert).toHaveBeenCalledTimes(1);
   });
 });
