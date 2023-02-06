@@ -14,13 +14,13 @@ function FavoriteRecipes() {
     setLocalS(lS);
   }, []);
 
-  if (filter === 'All') {
+  if (localS && filter === 'All') {
     localS.filter((tag) => listFav.push(tag));
   }
-  if (filter === 'Meals') {
+  if (localS && filter === 'Meals') {
     localS.filter((tag) => tag.type === 'meal' && listFav.push(tag));
   }
-  if (filter === 'Drinks') {
+  if (localS && filter === 'Drinks') {
     localS.filter((tag) => tag.type === 'drink' && listFav.push(tag));
   }
 

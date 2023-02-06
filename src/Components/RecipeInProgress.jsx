@@ -2,15 +2,27 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import './RecipeInProgress.css';
+import blackHeart from '../images/blackHeartIcon.svg';
+import shareIcon from '../images/shareIcon.svg';
+import whiteHeart from '../images/whiteHeartIcon.svg';
+// import { favoriteRecipes } from '../mockTemp';
 
 export default function RecipeInProgress() {
   const history = useHistory();
   const { id } = useParams();
   const tipo = (history.location.pathname).split('/')[1];
   const [filterId, setFilterId] = useState(false);
+  const [showOrHide, setShowOrHide] = useState(0);
   const QUINZE = 15;
+  const [fav, setFav] = useState(whiteHeart);
 
   useEffect(() => {
+    // localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+    const lS = JSON.parse(localStorage.getItem('favoriteRecipes'));
+    if (lS) {
+      lS.some((e) => (e.id === id ? setFav(blackHeart) : setFav(whiteHeart)));
+    }
+
     async function filtersData() {
       if (tipo === 'meals') {
         const response = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
@@ -51,6 +63,38 @@ export default function RecipeInProgress() {
 
   const title = tipo === 'meals' ? 'strMeal' : 'strDrink';
   const thumb = tipo === 'meals' ? 'strMealThumb' : 'strDrinkThumb';
+
+  const rename = tipo === 'meals' ? (
+    tipo.replace('meals', 'Meal')
+  ) : (
+    tipo.replace('drinks', 'Drink')
+  );
+
+  const handleFavBtn = () => {
+    const mapeado = filterId.map((e) => (
+      {
+        id: e[`id${rename}`],
+        type: rename === 'Meal' ? 'meal' : 'drink',
+        nationality: e.strArea ? e.strArea : '',
+        category: e.strCategory ? e.strCategory : '',
+        alcoholicOrNot: e.strAlcoholic ? e.strAlcoholic : '',
+        name: e[`str${rename}`],
+        image: e[`str${rename}Thumb`],
+      }
+    ));
+    localStorage.setItem('favoriteRecipes', JSON.stringify(mapeado));
+    console.log(filterId);
+    console.log(tipo);
+    if (fav === whiteHeart) {
+      setFav(blackHeart);
+    }
+    if (fav === blackHeart) {
+      setFav(whiteHeart);
+    }
+  };
+
+  // return -------------------------------------------------------------------------
+
   return (
     <div>
       <img
@@ -61,18 +105,40 @@ export default function RecipeInProgress() {
       <h2 data-testid="recipe-title">
         { filterId[0] && filterId[0][title] }
       </h2>
-      <button
+      {/* <img
         data-testid="share-btn"
+        src={ shareIcon }
+        alt="Share Icon"
         // onClick={ `${shareButton}` }
+      /> */}
+      <div
+        data-testid="share-btn"
+        onClick={ () => {
+          navigator.clipboard.writeText(`http://localhost:3000/${tipo}/${id}`);
+          setShowOrHide(id);
+        } }
+        aria-hidden="true"
+        src={ shareIcon }
+        alt="Compartilhar"
       >
-        Compartilhar
-      </button>
-      <button
+        <img
+          src={ shareIcon }
+          alt="Compartilhar"
+        />
+        <br />
+        <h4
+          style={ { display: showOrHide === id ? 'content' : 'none' } }
+        >
+          Link copied!
+        </h4>
+      </div>
+      <img
         data-testid="favorite-btn"
-        // onClick={ `${favoriteButton}` }
-      >
-        Favoritar
-      </button>
+        src={ fav }
+        onClick={ handleFavBtn }
+        alt="Share Icon"
+        aria-hidden
+      />
       <h3 data-testid="recipe-category">
         { filterId[0] !== undefined ? filterId[0].strCategory : '' }
       </h3>
